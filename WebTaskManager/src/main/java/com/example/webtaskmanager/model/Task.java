@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TaskList")
+@Table(name = "task")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +15,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int taskId;
+    private int taskid;
 
     @Column(name = "title")
     private String title;
@@ -25,5 +25,4 @@ public class Task {
 
     @Column(name = "describe")
     private String describe;
-
 }
