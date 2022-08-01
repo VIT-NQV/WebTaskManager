@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/loginCss.css">
+    <script type="text/javascript" src="/js/loginJs.js"></script>
+</head>
+<body>
+<div class="login-page">
+    <div class="form">
+        <h2>Login</h2>
+        <form class="login-form" th:action="@{/webtask/login}" method="post" th:object="${user}" id="form" onsubmit="return valiDate()">
+
+            <input id="username" name="username" type="text" placeholder="username"/>
+<!--                <span class="form-message" id="messageU"></span>-->
+
+            <input id="password" name="password" type="password" placeholder="password"/>
+<!--                <span class="form-message"></span>-->
+
+            <button type="submit">login</button>
+            <p class="message">Not registered? <a th:href="@{/webtask/register}">Create an account</a></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>

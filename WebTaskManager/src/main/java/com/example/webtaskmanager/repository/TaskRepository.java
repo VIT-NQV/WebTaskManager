@@ -14,5 +14,4 @@ public interface TaskRepository extends PagingAndSortingRepository<Task, Integer
     @Query(value = "SELECT t FROM Task as t WHERE t.title LIKE %:searchTitle% AND t.status LIKE %:searchStatus%")
     Page<Task> findAll(Pageable page, @Param("searchTitle") String searchTitle, @Param("searchStatus") String searchStatus);
 
-
 }

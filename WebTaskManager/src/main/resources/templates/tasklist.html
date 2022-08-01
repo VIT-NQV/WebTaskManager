@@ -28,14 +28,14 @@
 </head>
 <body>
     <div class="container">
-        <form th:action="@{/tasklist/search}" class="form" method="get">
-            <a th:href="@{/tasklist/index}"><h1 style="text-align: center">Task List</h1></a><br>
+        <form th:action="@{/webtask/tasklist/search}" class="form" method="get">
+            <a th:href="@{/webtask/tasklist/index}"><h1 style="text-align: center">Task List</h1></a><br>
             <div class="row align-items-start">
                 <div class="col">
                     <a href="#" class="btn btn-secondary">Export CSV</a>
                 </div>
                 <div class="col">
-                    <a th:href="@{/tasklist/newtask}" class="btn btn-primary">Tạo mới</a>
+                    <a th:href="@{/webtask/tasklist/newtask}" class="btn btn-primary">Tạo mới</a>
                 </div>
                 <div class="col">
                     <input type="text" class="form-control" id="searchTitle" name="searchTitle" th:value="${searchTitle}" placeholder="Tìm kiếm">
@@ -91,8 +91,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                        <a th:href="@{'/tasklist/updatetask/'+ ${task.taskid}}" th:attr="href='/tasklist/updatetask/update/'+ ${task.taskid}" class="btn btn-primary">Chỉnh sửa</a>
-                                        <a th:href="@{'/tasklist/deletetask/delete/'+ ${task.taskid}}" th:attr="href='/tasklist/deletetask/delete/'+ ${task.taskid}" class="btn btn-danger">Xoá</a>
+                                        <a th:href="@{'/webtask/tasklist/updatetask/'+ ${task.taskid}}" th:attr="href='/webtask/tasklist/updatetask/update/'+ ${task.taskid}" class="btn btn-primary">Chỉnh sửa</a>
+                                        <a th:href="@{'/webtask/tasklist/deletetask/delete/'+ ${task.taskid}}" th:attr="href='/webtask/tasklist/deletetask/delete/'+ ${task.taskid}" class="btn btn-danger">Xoá</a>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                        <a th:href="@{'/tasklist/deletetask/delete/'+ ${task.taskid}}" th:attr="href='/tasklist/deletetask/delete/'+ ${task.taskid}" class="btn btn-danger">Xoá</a>
+                                        <a th:href="@{'/webtask/tasklist/deletetask/delete/'+ ${task.taskid}}" th:attr="href='/webtask/tasklist/deletetask/delete/'+ ${task.taskid}" class="btn btn-danger">Xoá</a>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
         <div class="example" th:if="${totalPages >= 1}">
             <nav aria-label="Page navigation">
                 <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                    <a class="btn btn-secondary pageBtn" th:if="${currentPage != i}" th:href="@{'/tasklist/page/' + ${i} + '?searchTitle=' + ${searchTitle} + '&searchStatus=' + ${searchStatus}} ">[[${i}]]</a>
+                    <a class="btn btn-secondary pageBtn" th:if="${currentPage != i}" th:href="@{'/webtask/tasklist/page/' + ${i} + '?searchTitle=' + ${searchTitle} + '&searchStatus=' + ${searchStatus}} ">[[${i}]]</a>
                     <span class="btn btn-primary pageBtn" th:unless="${currentPage != i}">[[${i}]]</span>
                 </span>
             </nav>

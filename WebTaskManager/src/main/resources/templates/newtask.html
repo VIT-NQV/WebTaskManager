@@ -11,13 +11,13 @@
     <div class="newtask-page">
         <div class="form">
             <h2>New Task</h2>
-            <form th:action="@{/tasklist/newtask/addnew}" th:object="${newtask}" method="post">
+            <form th:action="@{/webtask/tasklist/newtask/addnew}" th:object="${newtask}" method="post">
 
                 <input id="title" name="title" th:field="*{title}" type="text" placeholder="Title"/>
-<!--                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>-->
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
 
                 <input id="describe" name="describe" th:field="*{describe}" type="text" placeholder="Describe"/>
-<!--                <span th:if="${#fields.hasErrors('describe')}" th:errors="*{describe}"></span>-->
+                <p th:if="${#fields.hasErrors('describe')}" th:errors="*{describe}"></p>
 
                 <select th:field="*{status}" class="custom-select" name="status" id="status">
                     <option selected value="Open">Open</option>
@@ -26,7 +26,7 @@
                 </select>
 
                 <button type="submit">Create</button>
-                <a class="btn btn-primary" th:href="@{/tasklist/index}">Cancel</a>
+                <a class="btn btn-primary" th:href="@{/webtask/tasklist/index}">Cancel</a>
 
             </form>
         </div>

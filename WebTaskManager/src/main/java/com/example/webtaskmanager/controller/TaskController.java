@@ -24,12 +24,12 @@ public class TaskController {
     @Autowired
     private TaskImpl taskImpl;
 
-    @GetMapping("/tasklist/index")
+    @GetMapping("/webtask/tasklist/index")
     public String showTasklist(Model model){
         return pagination(model, 1, "", "");
     }
 
-    @GetMapping("/tasklist/page/{page}")
+    @GetMapping("/webtask/tasklist/page/{page}")
     public String pagination(Model model,
                              @PathVariable("page") int page,
                              @Param(value = "searchTitle") String searchTitle,
@@ -49,7 +49,7 @@ public class TaskController {
         return "tasklist";
     }
 
-    @GetMapping("/tasklist/search")
+    @GetMapping("/webtask/tasklist/search")
     public String search(Model model,
                          @Param(value = "searchTitle") String searchTitle,
                          @Param(value = "searchStatus") String searchStatus) {
@@ -58,39 +58,38 @@ public class TaskController {
 
     }
 
-    @GetMapping("/tasklist/newtask")
+    @GetMapping("/webtask/tasklist/newtask")
     public String showNewtask(Model model) {
         model.addAttribute("newtask", new Task());
         return "newtask";
     }
 
-    @PostMapping("/tasklist/newtask/addnew")
+    @PostMapping("/webtask/tasklist/newtask/addnew")
     public String addTask(@ModelAttribute("newtask") Task task) {
         taskImpl.addTask(task);
-        return "redirect:/tasklist/index";
+        return "redirect:/webtask/tasklist/index";
     }
 
-    @GetMapping("/tasklist/updatetask/{taskid}")
+    @GetMapping("/webtask/tasklist/updatetask/{taskid}")
     public String showUpdatetask(Model model, @PathVariable("taskid") int taskid) {
         Task task = taskService.findById(taskid);
         if(task == null){
             task = new Task();
         }
-
         model.addAttribute("updatetask",task);
         return "updatetask";
     }
 
-    @PostMapping("/tasklist/updatetask/update")
+    @PostMapping("/webtask/tasklist/updatetask/update")
     public String updateTask (@ModelAttribute("updatetask") Task task) {
         taskImpl.addTask(task);
-        return "redirect:/tasklist/index";
+        return "redirect:/webtask/tasklist/index";
     }
 
-    @GetMapping("/tasklist/deletetask/delete/{taskid}")
+    @GetMapping("/webtask/tasklist/deletetask/delete/{taskid}")
     public String deleteTask(Model model, @PathVariable("taskid") int taskid) {
         taskImpl.deleteTask(taskid);
-        return "redirect:/tasklist/index";
+        return "redirect:/webtask/tasklist/index";
     }
 
 }
