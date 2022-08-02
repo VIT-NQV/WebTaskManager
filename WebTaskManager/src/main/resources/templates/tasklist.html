@@ -72,7 +72,7 @@
                     <td th:text="${task.title}"></td>
                     <td th:text="${task.status}"></td>
                     <td>
-                        <a th:href="@{'/tasklist/updatetask/'+ ${task.taskid}}" class="btn btn-primary">Chỉnh sửa</a>
+                        <a th:href="@{'/webtask/tasklist/updatetask/'+ ${task.taskid}}" class="btn btn-primary">Chỉnh sửa</a>
                         <button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#detail'+ ${task.taskid}">Chi tiết</button>
                         <button type="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#deletetask'+ ${task.taskid}">Xoá</button>
 

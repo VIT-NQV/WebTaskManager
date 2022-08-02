@@ -1,5 +1,6 @@
 package com.example.webtaskmanager.controller;
 
+import com.example.webtaskmanager.mapper.TaskMapper;
 import com.example.webtaskmanager.model.Task;
 import com.example.webtaskmanager.service.TaskService;
 import com.example.webtaskmanager.service.impl.TaskImpl;
@@ -35,13 +36,35 @@ public class TaskController {
                              @Param(value = "searchTitle") String searchTitle,
                              @Param(value = "searchStatus") String searchStatus) {
 
-        Page<Task> pagelist = taskService.findAll(page, searchTitle, searchStatus);
+//        Page<Task> pagelist = taskService.findAll(page, searchTitle, searchStatus);
 
-        int totalPages = pagelist.getTotalPages();
-        List<Task> tasklist = pagelist.getContent();
+
+        int AllItem = taskService.countAllMybatis(searchTitle, searchStatus);
+
+
+        int itemPerPage = 5;
+        int itemIndex =  (itemPerPage * (page - 1) );
+        double value = AllItem / itemPerPage;
+        double theRest = AllItem % itemPerPage;
+        double totalPagesMybitis =  Math.ceil(value);
+
+        if(theRest > 0){
+            totalPagesMybitis =  totalPagesMybitis + 1;
+        }
+
+        if(page == 1 ) {
+            itemIndex = 0;
+        }
+
+        List<Task> tasklist = taskService.findAllItem(searchTitle, searchStatus, itemIndex);
+
+//        System.out.println(taskService.countAllTitle("searchTitle"));
+
+//        int totalPages = pagelist.getTotalPages();
+//        List<Task> tasklist = pagelist.getContent();
 
         model.addAttribute("show", tasklist);
-        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalPages", totalPagesMybitis);
         model.addAttribute("currentPage", page);
         model.addAttribute("searchTitle", searchTitle);
         model.addAttribute("searchStatus", searchStatus);
@@ -66,7 +89,8 @@ public class TaskController {
 
     @PostMapping("/webtask/tasklist/newtask/addnew")
     public String addTask(@ModelAttribute("newtask") Task task) {
-        taskImpl.addTask(task);
+//        taskImpl.addTask(task);
+        taskImpl.addTaskMybatis(task);
         return "redirect:/webtask/tasklist/index";
     }
 
@@ -82,13 +106,15 @@ public class TaskController {
 
     @PostMapping("/webtask/tasklist/updatetask/update")
     public String updateTask (@ModelAttribute("updatetask") Task task) {
-        taskImpl.addTask(task);
+//        taskImpl.addTask(task);
+        taskImpl.editTaskMybatis(task);
         return "redirect:/webtask/tasklist/index";
     }
 
     @GetMapping("/webtask/tasklist/deletetask/delete/{taskid}")
     public String deleteTask(Model model, @PathVariable("taskid") int taskid) {
-        taskImpl.deleteTask(taskid);
+//        taskImpl.deleteTask(taskid);
+        taskImpl.deleteTaskMybatis(taskid);
         return "redirect:/webtask/tasklist/index";
     }
 

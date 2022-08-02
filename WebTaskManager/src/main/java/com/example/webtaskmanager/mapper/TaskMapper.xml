@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.webtaskmanager.mapper.TaskMapper">
+    
+    <select id="findAllItem" resultType="com.example.webtaskmanager.model.Task">
+        SELECT * FROM task WHERE (title LIKE '%' #{title} '%')  AND (status LIKE '%' #{status} '%') LIMIT #{start},5
+    </select>
+
+    <select id="countAllMybatis" resultType="com.example.webtaskmanager.model.Task" parameterType="String">
+        SELECT * FROM task WHERE (title LIKE '%' #{title} '%') AND (status LIKE '%' #{status} '%')
+    </select>
+
+<!--    <select id="countTitle" resultType="com.example.webtaskmanager.model.Task">-->
+<!--        SELECT COUTN(title) FROM task WHERE (title LIKE '%'|| #{title}|| '%')-->
+<!--    </select>-->
+
+<!--    <select id="countStatus" resultType="com.example.webtaskmanager.model.Task">-->
+<!--        SELECT COUTN(status) FROM task WHERE (status LIKE '%'|| #{title}|| '%')-->
+<!--    </select>-->
+
+<!--    <select id="limit" resultType="com.example.webtaskmanager.model.Task">-->
+<!--        SELECT * FROM task LIMIT 5;-->
+<!--    </select>-->
+
+    <insert id="addTask">
+        INSERT INTO task(describes, status, title) VALUES (#{task.describe}, #{task.status}, #{task.title});
+    </insert>
+
+    <update id="editTask">
+        UPDATE task SET
+                        describe = #{task.describe},
+                        status = #{task.status},
+                        title = #{task.title}
+        WHERE id = #{task.taskid}
+    </update>
+
+    <delete id="deleteTask" parameterType="int" >
+        DELETE FROM task WHERE taskid= ${taskid}
+    </delete>
+
+
+
+
+</mapper>
