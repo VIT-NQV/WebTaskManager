@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -29,4 +30,5 @@ public class User {
     @Column(name = "password")
     @NotBlank(message = "Password not null")
     private String password;
+
 }

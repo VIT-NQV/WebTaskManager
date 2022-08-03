@@ -1,5 +1,6 @@
 package com.example.webtaskmanager.service.impl;
 
+import com.example.webtaskmanager.mapper.UserMapper;
 import com.example.webtaskmanager.model.User;
 import com.example.webtaskmanager.repository.UserRepository;
 import com.example.webtaskmanager.service.UserService;
@@ -12,8 +13,17 @@ public class UserImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+    @Override
+    public Integer addUserMybatis(User user) {
+        return userMapper.addUserMybatis(user);
+    }
+
 }

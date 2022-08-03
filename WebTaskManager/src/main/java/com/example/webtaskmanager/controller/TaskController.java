@@ -2,6 +2,7 @@ package com.example.webtaskmanager.controller;
 
 import com.example.webtaskmanager.mapper.TaskMapper;
 import com.example.webtaskmanager.model.Task;
+import com.example.webtaskmanager.model.User;
 import com.example.webtaskmanager.service.TaskService;
 import com.example.webtaskmanager.service.impl.TaskImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -36,35 +45,26 @@ public class TaskController {
                              @Param(value = "searchTitle") String searchTitle,
                              @Param(value = "searchStatus") String searchStatus) {
 
-//        Page<Task> pagelist = taskService.findAll(page, searchTitle, searchStatus);
-
-
         int AllItem = taskService.countAllMybatis(searchTitle, searchStatus);
-
 
         int itemPerPage = 5;
         int itemIndex =  (itemPerPage * (page - 1) );
         double value = AllItem / itemPerPage;
         double theRest = AllItem % itemPerPage;
-        double totalPagesMybitis =  Math.ceil(value);
+        double totalPagesMybatis =  Math.ceil(value);
 
         if(theRest > 0){
-            totalPagesMybitis =  totalPagesMybitis + 1;
+            totalPagesMybatis =  totalPagesMybatis + 1;
         }
 
         if(page == 1 ) {
             itemIndex = 0;
         }
 
-        List<Task> tasklist = taskService.findAllItem(searchTitle, searchStatus, itemIndex);
-
-//        System.out.println(taskService.countAllTitle("searchTitle"));
-
-//        int totalPages = pagelist.getTotalPages();
-//        List<Task> tasklist = pagelist.getContent();
+        List<Task> tasklist = taskService.findAllMybatis(searchTitle, searchStatus, itemIndex);
 
         model.addAttribute("show", tasklist);
-        model.addAttribute("totalPages", totalPagesMybitis);
+        model.addAttribute("totalPages", totalPagesMybatis);
         model.addAttribute("currentPage", page);
         model.addAttribute("searchTitle", searchTitle);
         model.addAttribute("searchStatus", searchStatus);
@@ -89,8 +89,8 @@ public class TaskController {
 
     @PostMapping("/webtask/tasklist/newtask/addnew")
     public String addTask(@ModelAttribute("newtask") Task task) {
-//        taskImpl.addTask(task);
-        taskImpl.addTaskMybatis(task);
+        taskImpl.addTask(task);
+//        taskImpl.addTaskMybatis(task);
         return "redirect:/webtask/tasklist/index";
     }
 
@@ -116,6 +116,34 @@ public class TaskController {
 //        taskImpl.deleteTask(taskid);
         taskImpl.deleteTaskMybatis(taskid);
         return "redirect:/webtask/tasklist/index";
+    }
+
+    @GetMapping("webtask/tasklist/csv")
+    public void exportToCSV(HttpServletResponse response,
+                            @Param(value = "searchTitle") String searchTitle,
+                            @Param(value = "searchStatus") String searchStatus) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+
+        List<Task> tasklist = taskService.findAllCsv(searchTitle, searchStatus);
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Task ID", "Describe", "Status", "Title"};
+        String[] nameMapping = {"taskid", "describe", "status", "title"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (Task task : tasklist) {
+            csvWriter.write(task, nameMapping);
+        }
+
+        csvWriter.close();
+
     }
 
 }

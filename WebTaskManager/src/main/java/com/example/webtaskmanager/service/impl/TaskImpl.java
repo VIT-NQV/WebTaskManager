@@ -29,17 +29,6 @@ public class TaskImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllItem(String searchTitle, String searchStatus, int start) {
-        List<Task> items = taskMapper.findAllItem(searchTitle, searchStatus, start);
-
-        if(items.size() > 0){
-            return  items;
-        }
-
-        return null;
-    }
-
-    @Override
     public Task findById(int taskId) {
         Optional<Task> task = taskRepository.findById(taskId);
         if(task.isPresent()){
@@ -77,13 +66,24 @@ public class TaskImpl implements TaskService {
 //    }
 
     @Override
+    public List<Task> findAllMybatis(String searchTitle, String searchStatus, int start) {
+        List<Task> items = taskMapper.findAllMybatis(searchTitle, searchStatus, start);
+
+        if(items.size() > 0){
+            return  items;
+        }
+
+        return null;
+    }
+
+    @Override
     public int countAllMybatis(String title, String status) {
         int count = taskMapper.countAllMybatis(title, status).size();
         return count;
     }
     @Override
-    public void addTaskMybatis(Task task) {
-        taskMapper.addTask(task);
+    public Task addTaskMybatis(Task task) {
+        return taskMapper.addTask(task);
     }
 
     @Override
@@ -96,5 +96,14 @@ public class TaskImpl implements TaskService {
         taskMapper.deleteTask(taskid);
     }
 
+    @Override
+    public List<Task> findAllCsv(String searchTitle, String searchStatus) {
+        List<Task> items = taskMapper.findAllCsv(searchTitle, searchStatus);
 
+        if(items.size() > 0){
+            return  items;
+        }
+
+        return null;
+    }
 }

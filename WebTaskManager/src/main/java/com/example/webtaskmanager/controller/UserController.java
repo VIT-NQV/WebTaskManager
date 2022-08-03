@@ -38,7 +38,8 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String enCode = passwordEncoder.encode(user.getPassword());
         user.setPassword(enCode);
-        userimpl.saveUser(user);
+//        userimpl.saveUser(user);
+        userimpl.addUserMybatis(user);
         return "redirect:/webtask/login";
     }
 

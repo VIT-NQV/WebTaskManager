@@ -10,11 +10,9 @@ import java.util.List;
 @Service
 public interface TaskService {
 
+    //jpa
+
     Page<Task> findAll(int page, String searchTitle, String searchStatus);
-
-//    List<Task> findAllItem(String searchTitle, String searchStatus);
-
-    List<Task> findAllItem(String searchTitle, String searchStatus, int start);
 
     Task findById(int taskId);
 
@@ -24,13 +22,22 @@ public interface TaskService {
 
     void deleteTask(int taskid);
 
+
+
+    //Mybatis
+
+    List<Task> findAllMybatis(String searchTitle, String searchStatus, int start);
+
     int countAllMybatis(String title, String status);
 
-    void addTaskMybatis(Task task);
+    List<Task> findAllCsv(String title, String status);
+
+    Task addTaskMybatis(Task task);
 
     void editTaskMybatis(Task task);
 
     void deleteTaskMybatis(int taskid);
+
 //    Long createTask(ListTaskEntity listTask);
 
 }
