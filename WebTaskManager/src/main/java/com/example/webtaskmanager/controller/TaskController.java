@@ -1,15 +1,14 @@
 package com.example.webtaskmanager.controller;
 
-import com.example.webtaskmanager.mapper.TaskMapper;
+
 import com.example.webtaskmanager.model.Task;
-import com.example.webtaskmanager.model.User;
 import com.example.webtaskmanager.service.TaskService;
 import com.example.webtaskmanager.service.impl.TaskImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -88,7 +88,10 @@ public class TaskController {
     }
 
     @PostMapping("/webtask/tasklist/newtask/addnew")
-    public String addTask(@ModelAttribute("newtask") Task task) {
+    public String addTask(@Valid @ModelAttribute("newtask") Task task, BindingResult result) {
+        if (result.hasErrors()) {
+            return "newtask";
+        }
         taskImpl.addTask(task);
 //        taskImpl.addTaskMybatis(task);
         return "redirect:/webtask/tasklist/index";
@@ -96,6 +99,7 @@ public class TaskController {
 
     @GetMapping("/webtask/tasklist/updatetask/{taskid}")
     public String showUpdatetask(Model model, @PathVariable("taskid") int taskid) {
+
         Task task = taskService.findById(taskid);
         if(task == null){
             task = new Task();
@@ -105,7 +109,10 @@ public class TaskController {
     }
 
     @PostMapping("/webtask/tasklist/updatetask/update")
-    public String updateTask (@ModelAttribute("updatetask") Task task) {
+    public String updateTask (@Valid @ModelAttribute("updatetask") Task task, BindingResult result) {
+        if (result.hasErrors()) {
+            return "updatetask";
+        }
 //        taskImpl.addTask(task);
         taskImpl.editTaskMybatis(task);
         return "redirect:/webtask/tasklist/index";

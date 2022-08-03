@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+/*@import url(https://fonts.googleapis.com/css?family=Roboto:300);*/
 
 .newtask-page {
     width: 360px;
@@ -34,6 +34,7 @@
     width: 100%;
     border: 0;
     padding: 15px;
+    margin-top: 10px;
     color: #FFFFFF;
     font-size: 14px;
     -webkit-transition: all 0.3 ease;
@@ -95,9 +96,17 @@
 
 body {
     background: #0084ff !important; /* fallback for old browsers */
-    background: #0084ff !important;
-    background: #0084ff !important;
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.custom-select {
+    height: 45px !important;
+}
+
+.text-error{
+    color: #D8000C;
+    background-color: #FFBABA;
+    margin-top: -6%;
 }

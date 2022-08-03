@@ -2,6 +2,7 @@ function confirmPassword() {
     let password = document.getElementById("password").value;
     let confirmPassword = document.getElementById("confirmPassword").value;
 
+
     if (confirmPassword == "") {
         document.getElementById("message").innerHTML = "Fill the password please!";
         return false;
@@ -16,12 +17,12 @@ function confirmPassword() {
         document.getElementById("message").innerHTML = "Password length must not exceed 15 characters";
         return false;
     }
-
-    if (password != confirmPassword) {
-        document.getElementById("message").innerHTML = "Confirm password is incorrect";
-        return false;
-    } else {
-        alert("Successful account registration");
-    }
+    //
+    // if (password != confirmPassword) {
+    //     document.getElementById("message").innerHTML = "Confirm password is incorrect";
+    //     return false;
+    // } else {
+    //     alert("Successful account registration");
+    // }
 
 }

@@ -23,6 +23,7 @@ public class Task {
     private String title;
 
     @Column(name = "status")
+    @NotBlank(message = "Status not null")
     private String status;
 
     @Column(name = "describe")
