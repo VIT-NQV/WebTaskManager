@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
@@ -37,7 +38,7 @@ public class TaskController {
                              @Param(value = "searchTitle") String searchTitle,
                              @Param(value = "searchStatus") String searchStatus) {
 
-        int AllItem = taskService.countAllMybatis(searchTitle, searchStatus);
+        int AllItem = taskService.countTaskMybatis(searchTitle, searchStatus);
 
         int itemPerPage = 5;
         int itemIndex = (itemPerPage * (page - 1));
@@ -53,10 +54,10 @@ public class TaskController {
             itemIndex = 0;
         }
 
-        List<Task> tasklist = taskService.findAllMybatis(searchTitle, searchStatus, itemIndex);
+        List<Task> tasklist = taskService.findTaskMybatis(searchTitle, searchStatus, itemIndex);
 
         model.addAttribute("show", tasklist);
-        model.addAttribute("totalPages", totalPagesMybatis);
+        model.addAttribute("totalPages",(int) totalPagesMybatis);
         model.addAttribute("currentPage", page);
         model.addAttribute("searchTitle", searchTitle);
         model.addAttribute("searchStatus", searchStatus);
@@ -80,12 +81,15 @@ public class TaskController {
     }
 
     @PostMapping("/tasklist/newtask/addnew")
-    public String addTask(@Valid @ModelAttribute("newtask") Task task, BindingResult result) {
+    public String addTask(@Valid @ModelAttribute("newtask") Task task,
+                          BindingResult result,
+                          RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "newtask";
         }
 //        taskService.addTask(task);
         taskService.addTaskMybatis(task);
+        redirectAttributes.addFlashAttribute("messageSuccessful", "Successful new task creation");
         return "redirect:/webtask/tasklist/index";
     }
 
@@ -101,12 +105,15 @@ public class TaskController {
     }
 
     @PostMapping("/tasklist/updatetask/update")
-    public String updateTask(@Valid @ModelAttribute("updatetask") Task task, BindingResult result) {
+    public String updateTask(@Valid @ModelAttribute("updatetask") Task task,
+                             BindingResult result,
+                             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "updatetask";
         }
 //        taskImpl.addTask(task);
         taskService.editTaskMybatis(task);
+        redirectAttributes.addFlashAttribute("messageSuccessful", "Edit task success");
         return "redirect:/webtask/tasklist/index";
     }
 

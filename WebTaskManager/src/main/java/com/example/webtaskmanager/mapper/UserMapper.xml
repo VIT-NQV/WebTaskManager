@@ -3,6 +3,12 @@
 
 <mapper namespace="com.example.webtaskmanager.mapper.UserMapper">
 
+    <select id="findByUsername" resultType="com.example.webtaskmanager.model.User">
+        SELECT *
+        FROM `user`
+        WHERE `username` = #{username}
+    </select>
+
     <insert id="addUserMybatis">
         INSERT INTO user (`fullname`, `password`, `username`)
         VALUES (#{user.fullname},

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -34,7 +35,9 @@ public class UserController {
     }
 
     @PostMapping("/register/save")
-    public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
+    public String saveUser(@Valid @ModelAttribute("user") User user,
+                           BindingResult result,
+                           RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "register";
         }
@@ -43,6 +46,7 @@ public class UserController {
         user.setPassword(enCode);
 //        userService.saveUser(user);
         userService.addUserMybatis(user);
+        redirectAttributes.addFlashAttribute("messageSuccessful", "User registration successful");
         return "redirect:/webtask/login";
     }
 

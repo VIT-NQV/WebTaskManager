@@ -1,11 +1,11 @@
 package com.example.webtaskmanager.model;
 
+import com.example.webtaskmanager.customValidate.UserCustomValidate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -25,6 +25,7 @@ public class User {
 
     @Column(name = "username")
     @NotBlank(message = "Username not null")
+    @UserCustomValidate
     private String username;
 
     @Column(name = "password")

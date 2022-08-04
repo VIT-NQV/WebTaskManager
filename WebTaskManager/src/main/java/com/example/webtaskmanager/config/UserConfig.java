@@ -50,8 +50,11 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/webtask/tasklist/index")
                 .failureUrl("/webtask/login?error=true")
                 .permitAll().and().csrf().disable()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/webtask/logout")).logoutSuccessUrl("/webtask/login");
-//                .logoutSuccessUrl("/webtask/login?logout=true");
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/webtask/logout")).logoutSuccessUrl("/webtask/login")
+//                .logout().logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll();
     }
 
 }

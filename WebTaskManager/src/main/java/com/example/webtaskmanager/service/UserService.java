@@ -7,4 +7,6 @@ public interface UserService {
     User saveUser(User user);
 
     Integer addUserMybatis(User user);
+
+    User findByUsername(String username);
 }

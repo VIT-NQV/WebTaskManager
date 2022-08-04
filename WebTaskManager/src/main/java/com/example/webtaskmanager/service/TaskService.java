@@ -27,11 +27,14 @@ public interface TaskService {
 
     //Mybatis
 
-    List<Task> findAllMybatis(String searchTitle, String searchStatus, int start);
+    List<Task> findTaskMybatis(String searchTitle, String searchStatus, int start);
 
-    int countAllMybatis(String title, String status);
+    int countTaskMybatis(String title, String status);
 
-    List<Task> findAllCsv(String title, String status);
+    List<Task> findCsv(String title, String status);
+
+    Task findByTitle(String title);
+
 
     Integer addTaskMybatis(Task task);
 

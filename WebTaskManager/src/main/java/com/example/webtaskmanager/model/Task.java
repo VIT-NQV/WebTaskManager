@@ -1,5 +1,6 @@
 package com.example.webtaskmanager.model;
 
+import com.example.webtaskmanager.customValidate.TaskCustomValidate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class Task {
 
     @Column(name = "title")
     @NotBlank(message = "Title not null")
+    @TaskCustomValidate
     private String title;
 
     @Column(name = "status")

@@ -109,9 +109,7 @@
 }
 
 body {
-    background: #0084ff; /* fallback for old browsers */
-    background: #0084ff;
-    background: #0084ff;
+    background: #0084ff !important; /* fallback for old browsers */
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -121,4 +119,11 @@ body {
     color: red;
     font-size: 15px;
     margin-top: -5%;
+}
+
+.card-color {
+    margin-top: 6%;
+    background-color: #5BB318 !important;
+    color: white !important;
+    font-size: 15px !important;
 }

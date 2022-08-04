@@ -22,6 +22,11 @@ public class UserImpl implements UserService {
     }
 
     @Override
+    public User findByUsername(String username) {
+        return userMapper.findByUsername(username);
+    }
+
+    @Override
     public Integer addUserMybatis(User user) {
         return userMapper.addUserMybatis(user);
     }

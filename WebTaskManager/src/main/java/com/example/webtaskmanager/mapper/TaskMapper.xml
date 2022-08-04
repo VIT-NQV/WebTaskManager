@@ -3,25 +3,31 @@
 
 <mapper namespace="com.example.webtaskmanager.mapper.TaskMapper">
 
-    <select id="findAllMybatis" resultType="com.example.webtaskmanager.model.Task">
+    <select id="findTaskMybatis" resultType="com.example.webtaskmanager.model.Task">
         SELECT *
         FROM task
         WHERE (title LIKE '%' #{title} '%')
           AND (status LIKE '%' #{status} '%') LIMIT #{start}, 5
     </select>
 
-    <select id="countAllMybatis" resultType="com.example.webtaskmanager.model.Task" parameterType="String">
+    <select id="countTaskMybatis" resultType="com.example.webtaskmanager.model.Task" parameterType="String">
         SELECT *
         FROM task
         WHERE (title LIKE '%' #{title} '%')
           AND (status LIKE '%' #{status} '%')
     </select>
 
-    <select id="findAllCsv" resultType="com.example.webtaskmanager.model.Task" parameterType="String">
+    <select id="findCsv" resultType="com.example.webtaskmanager.model.Task" parameterType="String">
         SELECT *
         FROM task
         WHERE (`title` LIKE '%' #{title} '%')
           AND (`status` LIKE '%' #{status} '%')
+    </select>
+
+    <select id="findByTitle" resultType="com.example.webtaskmanager.model.Task">
+        SELECT *
+        FROM task
+        WHERE `title` = #{title}
     </select>
 
     <insert id="addTask">

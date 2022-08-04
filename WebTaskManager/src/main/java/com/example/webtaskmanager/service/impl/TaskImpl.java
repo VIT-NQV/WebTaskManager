@@ -74,8 +74,8 @@ public class TaskImpl implements TaskService {
 //    }
 
     @Override
-    public List<Task> findAllMybatis(String searchTitle, String searchStatus, int start) {
-        List<Task> items = taskMapper.findAllMybatis(searchTitle, searchStatus, start);
+    public List<Task> findTaskMybatis(String searchTitle, String searchStatus, int start) {
+        List<Task> items = taskMapper.findTaskMybatis(searchTitle, searchStatus, start);
 
         if (items.size() > 0) {
             return items;
@@ -85,8 +85,8 @@ public class TaskImpl implements TaskService {
     }
 
     @Override
-    public int countAllMybatis(String title, String status) {
-        int count = taskMapper.countAllMybatis(title, status).size();
+    public int countTaskMybatis(String title, String status) {
+        int count = taskMapper.countTaskMybatis(title, status).size();
         return count;
     }
 
@@ -106,8 +106,8 @@ public class TaskImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllCsv(String searchTitle, String searchStatus) {
-        List<Task> items = taskMapper.findAllCsv(searchTitle, searchStatus);
+    public List<Task> findCsv(String searchTitle, String searchStatus) {
+        List<Task> items = taskMapper.findCsv(searchTitle, searchStatus);
 
         if (items.size() > 0) {
             return items;
@@ -128,7 +128,7 @@ public class TaskImpl implements TaskService {
         String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
         response.setHeader(headerKey, headerValue);
 
-        List<Task> tasklist = taskMapper.findAllCsv(searchTitle, searchStatus);
+        List<Task> tasklist = taskMapper.findCsv(searchTitle, searchStatus);
 
         ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
         String[] csvHeader = {"Task ID", "Describe", "Status", "Title"};
@@ -141,5 +141,10 @@ public class TaskImpl implements TaskService {
         }
 
         csvWriter.close();
+    }
+
+    @Override
+    public Task findByTitle(String title) {
+        return taskMapper.findByTitle(title);
     }
 }

@@ -9,11 +9,13 @@ import java.util.List;
 @Mapper
 public interface TaskMapper {
 
-    List<Task> findAllMybatis(@Param("title") String title, @Param("status") String status , @Param("start") int start);
+    List<Task> findTaskMybatis(@Param("title") String title, @Param("status") String status , @Param("start") int start);
 
-    List<Task> countAllMybatis(@Param("title") String title,  @Param("status") String status);
+    List<Task> countTaskMybatis(@Param("title") String title,  @Param("status") String status);
 
-    List<Task> findAllCsv(@Param("title") String title, @Param("status") String status);
+    List<Task> findCsv(@Param("title") String title, @Param("status") String status);
+
+    Task findByTitle(@Param("title") String title);
 
     Integer addTask(@Param("task") Task task);
 

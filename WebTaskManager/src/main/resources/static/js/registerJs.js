@@ -1,24 +1,31 @@
+
 function confirmPassword() {
 
-    let password = document.myForm.password.value;
-    let confirmPassword = document.myForm.confirmPassword.value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let message = "";
     let result = true;
+    console.log(confirmPassword);
 
-    if (password != confirmPassword) {
-        document.getElementById("message").innerText = "Fill the password please!";
+    if (!confirmPassword) {
+        document.getElementById("messageConfirm").innerText = "Fill the password please!";
         result = false;
+    } else if (confirmPassword.length < 8 || confirmPassword.length > 15) {
+        document.getElementById("messageConfirm").innerText = "Password length must be at least 8-15 characters";
+        result = false;
+    } else {
+        document.getElementById("messageConfirm").innerText = "";
     }
 
-    if (confirmPassword.length < 8 || confirmPassword.length > 15) {
-        document.getElementById("message").innerText = "Password length must be at least 8 characters";
+    if (password !== confirmPassword) {
+        document.getElementById("messageConfirm").innerText = "Confirm password is incorrect";
         result = false;
+    } else {
+        document.getElementById("messageConfirm").innerText = "";
     }
 
-    if (confirmPassword.length > 15) {
-        document.getElementById("message").innerText = "Password length must not exceed 15 characters";
-        result = false;
-    }
 
+    // document.getElementById("messageConfirm").innerText = message;
     return result;
 
 }

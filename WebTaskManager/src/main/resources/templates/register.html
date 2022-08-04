@@ -4,26 +4,29 @@
     <meta charset="UTF-8">
     <title>Register</title>
     <link rel="stylesheet" href="/css/registerCss.css">
-    <script type="text/javascript" src="/js/registerJs.js"></script>
+    <!--    <script type="text/javascript" src="/js/registerJs.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div class="register-page">
     <div class="form">
         <h2>Sign Up</h2>
-        <form name="myForm" th:action="@{/webtask/register/save}" th:object="${user}" method="post"
-              onsubmit="return confirmPassword()">
+        <form name="myForm" th:action="@{/webtask/register/save}" th:object="${user}" method="post">
 
-            <input id="name" name="name" th:field="*{fullname}" type="text" placeholder="Fullame"/>
+            <input id="fullname" name="fullname" th:field="*{fullname}" type="text" placeholder="Full name"/>
             <p class="text-error" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
+            <p class="text-error" id="messageFullname"></p>
 
             <input id="username" name="username" th:field="*{username}" type="text" placeholder="Username"/>
             <p class="text-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            <p class="text-error" id="messageUsername"></p>
 
             <input id="password" name="password" th:field="*{password}" type="password" placeholder="Password"/>
             <p class="text-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            <p class="text-error" id="messagePassword"></p>
 
             <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password"/>
-            <p class="text-error" id="message"></p>
+            <p class="text-error" id="messageConfirm"></p>
 
             <button>Create</button>
 
@@ -32,5 +35,60 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').on('submit', function () {
+            let fullname = $('#fullname').val();
+            let username = $('#username').val();
+            let password = $('#password').val();
+            let confirmPassword = $('#confirmPassword').val();
+            let result = true;
+
+            if (fullname === "") {
+                $('#messageFullname').text("You need to enter Full name")
+                result = false;
+            } else if (fullname.length < 3 || fullname.length > 256) {
+                $('#messageFullname').text("You need to enter 3-256 characters")
+                result = false;
+            } else {
+                $('#messageFullname').text("")
+            }
+
+            if (username === "") {
+                $('#messageUsername').text("You need to enter username")
+                result = false;
+            } else if (username.length < 3 || username.length > 256) {
+                $('#messageUsername').text("You need to enter 3-256 characters")
+                result = false;
+            } else {
+                $('#messageUsername').text("")
+            }
+
+
+            if (password === "") {
+                $('#messagePassword').text("You need to enter Password")
+                result = false;
+            } else if (password.length < 8 || password.length > 15) {
+                $('#messagePassword').text("You need to enter 8-15 characters")
+                result = false;
+            } else {
+                $('#messagePassword').text("")
+            }
+
+
+            if (confirmPassword === "") {
+                $('#messageConfirm').text("You need to enter password confirmation")
+                result = false;
+            } else if (password !== confirmPassword) {
+                $('#messageConfirm').text("ConfirmPassword equal password")
+                result = false;
+            } else {
+                $('#messageConfirm').text("")
+            }
+
+            return result;
+        });
+    });
+</script>
 </body>
 </html>
