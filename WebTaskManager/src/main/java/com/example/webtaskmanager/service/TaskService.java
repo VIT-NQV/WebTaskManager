@@ -5,6 +5,8 @@ import com.example.webtaskmanager.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -23,7 +25,6 @@ public interface TaskService {
     void deleteTask(int taskid);
 
 
-
     //Mybatis
 
     List<Task> findAllMybatis(String searchTitle, String searchStatus, int start);
@@ -32,12 +33,12 @@ public interface TaskService {
 
     List<Task> findAllCsv(String title, String status);
 
-    Task addTaskMybatis(Task task);
+    Integer addTaskMybatis(Task task);
 
     void editTaskMybatis(Task task);
 
     void deleteTaskMybatis(int taskid);
 
-//    Long createTask(ListTaskEntity listTask);
+    void exportCsv(HttpServletResponse response, String searchTitle, String searchStatus) throws IOException;
 
 }

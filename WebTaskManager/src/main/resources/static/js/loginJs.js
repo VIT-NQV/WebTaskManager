@@ -1,26 +1,36 @@
+function validate() {
 
-function valiDate() {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+    let username = document.myForm.username.value;
+    let password = document.myForm.password.value;
+    let result = true;
 
     if (username == "") {
-        alert("Username connot be empty");
-        return false;
+        document.getElementById("messageUsername").innerText = "Fill the Username please!";
+        result = false;
+    } else {
+        document.getElementById("messageUsername").innerText = "";
     }
 
-    if (username.length <= 3 || username.length >= 256){
-        alert("Username must enter 3-256 characters");
-        return false;
+    if (username.length <= 3 || username.length >= 256) {
+        document.getElementById("messageUsername").innerText = "Username must enter 3-256 characters";
+        result = false;
+    } else {
+        document.getElementById("messageUsername").innerText = "";
     }
 
     if (password == "") {
-        alert("Password connot be empty");
-        return false;
+        document.getElementById("messagePassword").innerText = "Fill the Password please!";
+        result = false;
+    } else {
+        document.getElementById("messagePassword").innerText = "";
     }
 
-    if (password.length < 3 || password.length > 256) {
-        alert("loz must enter 8-256 characters");
-        return false;
+    if (password.length < 3 || password.length > 15) {
+        document.getElementById("messagePassword").innerText = "Password must enter 3-15 characters";
+        result = false;
+    } else {
+        document.getElementById("messagePassword").innerText = "";
     }
 
+    return result;
 }

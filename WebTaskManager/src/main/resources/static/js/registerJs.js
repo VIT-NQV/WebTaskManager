@@ -1,28 +1,24 @@
 function confirmPassword() {
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
 
+    let password = document.myForm.password.value;
+    let confirmPassword = document.myForm.confirmPassword.value;
+    let result = true;
 
-    if (confirmPassword == "") {
-        document.getElementById("message").innerHTML = "Fill the password please!";
-        return false;
+    if (password != confirmPassword) {
+        document.getElementById("message").innerText = "Fill the password please!";
+        result = false;
     }
 
-    if (confirmPassword.length < 8) {
-        document.getElementById("message").innerHTML = "Password length must be at least 8 characters";
-        return false;
+    if (confirmPassword.length < 8 || confirmPassword.length > 15) {
+        document.getElementById("message").innerText = "Password length must be at least 8 characters";
+        result = false;
     }
 
     if (confirmPassword.length > 15) {
-        document.getElementById("message").innerHTML = "Password length must not exceed 15 characters";
-        return false;
+        document.getElementById("message").innerText = "Password length must not exceed 15 characters";
+        result = false;
     }
-    //
-    // if (password != confirmPassword) {
-    //     document.getElementById("message").innerHTML = "Confirm password is incorrect";
-    //     return false;
-    // } else {
-    //     alert("Successful account registration");
-    // }
+
+    return result;
 
 }

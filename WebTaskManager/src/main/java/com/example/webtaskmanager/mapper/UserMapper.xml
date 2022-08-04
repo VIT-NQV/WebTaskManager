@@ -5,11 +5,9 @@
 
     <insert id="addUserMybatis">
         INSERT INTO user (`fullname`, `password`, `username`)
-        VALUES (
-                #{user.fullname},
+        VALUES (#{user.fullname},
                 #{user.password},
-                #{user.username}
-        );
+                #{user.username});
     </insert>
 
 </mapper>

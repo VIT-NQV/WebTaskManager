@@ -15,7 +15,7 @@ public interface TaskMapper {
 
     List<Task> findAllCsv(@Param("title") String title, @Param("status") String status);
 
-    Task addTask(@Param("task") Task task);
+    Integer addTask(@Param("task") Task task);
 
     void editTask(@Param("task") Task task);
 

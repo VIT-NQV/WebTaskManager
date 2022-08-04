@@ -9,7 +9,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +39,7 @@ public class TaskImpl implements TaskService {
     @Override
     public Task findById(int taskId) {
         Optional<Task> task = taskRepository.findById(taskId);
-        if(task.isPresent()){
+        if (task.isPresent()) {
             return task.get();
         }
         return null;
@@ -69,8 +77,8 @@ public class TaskImpl implements TaskService {
     public List<Task> findAllMybatis(String searchTitle, String searchStatus, int start) {
         List<Task> items = taskMapper.findAllMybatis(searchTitle, searchStatus, start);
 
-        if(items.size() > 0){
-            return  items;
+        if (items.size() > 0) {
+            return items;
         }
 
         return null;
@@ -81,8 +89,9 @@ public class TaskImpl implements TaskService {
         int count = taskMapper.countAllMybatis(title, status).size();
         return count;
     }
+
     @Override
-    public Task addTaskMybatis(Task task) {
+    public Integer addTaskMybatis(Task task) {
         return taskMapper.addTask(task);
     }
 
@@ -100,10 +109,37 @@ public class TaskImpl implements TaskService {
     public List<Task> findAllCsv(String searchTitle, String searchStatus) {
         List<Task> items = taskMapper.findAllCsv(searchTitle, searchStatus);
 
-        if(items.size() > 0){
-            return  items;
+        if (items.size() > 0) {
+            return items;
         }
 
         return null;
+    }
+
+    @Override
+    public void exportCsv(HttpServletResponse response,
+                          String searchTitle,
+                          String searchStatus) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+
+        List<Task> tasklist = taskMapper.findAllCsv(searchTitle, searchStatus);
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Task ID", "Describe", "Status", "Title"};
+        String[] nameMapping = {"taskid", "describe", "status", "title"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (Task task : tasklist) {
+            csvWriter.write(task, nameMapping);
+        }
+
+        csvWriter.close();
     }
 }

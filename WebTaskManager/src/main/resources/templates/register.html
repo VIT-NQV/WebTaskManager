@@ -10,7 +10,8 @@
 <div class="register-page">
     <div class="form">
         <h2>Sign Up</h2>
-        <form th:action="@{/webtask/register/save}" th:object="${user}" method="post" onsubmit="return confirmPassword()">
+        <form name="myForm" th:action="@{/webtask/register/save}" th:object="${user}" method="post"
+              onsubmit="return confirmPassword()">
 
             <input id="name" name="name" th:field="*{fullname}" type="text" placeholder="Fullame"/>
             <p class="text-error" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
@@ -24,7 +25,7 @@
             <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password"/>
             <p class="text-error" id="message"></p>
 
-            <button >Create</button>
+            <button>Create</button>
 
             <p class="message">Already registered? <a th:href="@{/webtask/login}">Back to login</a></p>
 

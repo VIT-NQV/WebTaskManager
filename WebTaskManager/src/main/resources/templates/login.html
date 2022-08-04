@@ -10,15 +10,15 @@
 <div class="login-page">
     <div class="form">
         <h2>Login</h2>
-        <form class="login-form" th:action="@{/webtask/login}" method="post" th:object="${user}" id="form" onsubmit="return valiDate()">
+        <form class="login-form" name="myForm" th:action="@{/webtask/login}" method="post" th:object="${user}" id="form" onsubmit="return validate()">
 
-            <input id="username" name="username" type="text" placeholder="username"/>
-<!--                <span class="form-message" id="messageU"></span>-->
+            <input id="username" name="username" type="text" placeholder="Username" value="vietnq26"/>
+            <p class="text-error" id="messageUsername"></p>
 
-            <input id="password" name="password" type="password" placeholder="password"/>
-<!--                <span class="form-message"></span>-->
+            <input id="password" name="password" type="password" placeholder="Password" value="123"/>
+            <p class="text-error" id="messagePassword"></p>
 
-            <button type="submit">login</button>
+            <button type="submit">Login</button>
             <p class="message">Not registered? <a th:href="@{/webtask/register}">Create an account</a></p>
         </form>
     </div>
